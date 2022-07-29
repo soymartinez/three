@@ -5,11 +5,29 @@ import { OrbitControls } from "OrbitControls";
 const scene = new THREE.Scene()
 
 // Object
-const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({ color: 0x6242ea })
-const mesh = new THREE.Mesh(geometry, material)
+const cube = new THREE.BoxGeometry(1, 1, 1, 2, 2, 2)
+const cylinder = new THREE.SphereGeometry(1, 32, 32)
+const plane = new THREE.PlaneGeometry(1, 1)
+const torus = new THREE.TorusGeometry(0.5, 0.3, 12, 32)
 
-scene.add(mesh)
+const material = new THREE.MeshBasicMaterial({
+    // color: 0x6242ea,
+    // wireframe: true,
+    opacity: 0.5,
+    transparent: true,
+    side: THREE.DoubleSide,
+})
+
+const meshCube = new THREE.Mesh(cube, material)
+meshCube.position.x = -3
+const meshSphere = new THREE.Mesh(cylinder , material)
+meshSphere.position.x = -1
+const meshPlane = new THREE.Mesh(plane , material)
+meshPlane.position.x = 1
+const meshTorus = new THREE.Mesh(torus, material)
+meshTorus.position.x = 3
+
+scene.add(meshCube, meshSphere, meshPlane, meshTorus)
 
 // Sizes
 const sizes = {
@@ -43,9 +61,17 @@ const clock = new THREE.Clock()
 const animate = () => {
     const elapsedTime = clock.getElapsedTime()
 
+    // Update objects
+    meshCube.rotation.x += 0.01
+    meshCube.rotation.y += 0.01
+    meshSphere.rotation.x += 0.01
+    meshSphere.rotation.y += 0.01
+    meshPlane.rotation.x += 0.01
+    meshPlane.rotation.y += 0.01
+    meshTorus.rotation.x += 0.01
+    meshTorus.rotation.y += 0.01
+
     requestAnimationFrame(animate)
-    mesh.rotation.x += 0.01
-    mesh.rotation.y += 0.01
     renderer.render(scene, camera)
 }
 animate()

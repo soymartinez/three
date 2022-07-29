@@ -1,3 +1,6 @@
+import * as THREE from "three";
+import { OrbitControls } from "OrbitControls";
+
 // Scene
 const scene = new THREE.Scene()
 
@@ -15,14 +18,17 @@ const sizes = {
 }
 
 // Camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height)
-camera.position.x = 0
-camera.position.y = -1
-camera.position.z = 5
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 10000)
+camera.position.set(0, -1, 5)
 scene.add(camera)
 
 // Canvas
 const canvas = document.querySelector('.webgl')
+
+// Controls
+const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = true
+controls.update()
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -30,3 +36,16 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.render(scene, camera)
+
+// Animation
+const clock = new THREE.Clock()
+
+const animate = () => {
+    const elapsedTime = clock.getElapsedTime()
+
+    requestAnimationFrame(animate)
+    mesh.rotation.x += 0.01
+    mesh.rotation.y += 0.01
+    renderer.render(scene, camera)
+}
+animate()

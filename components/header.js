@@ -4,7 +4,7 @@ export default function Header() {
       backdrop-blur-sm rounded-lg'>
       <h1 className='text-4xl font-black mb-4'>Three.js</h1>
       <p>
-        <a target={'_blank'} href='https://threejs.org/'
+        <a target={'_blank'} rel={'noreferrer'} href='https://threejs.org/'
           className='hover:underline text-violet-400 font-bold'>
           Three.js
         </a> is a JavaScript library for building 3D applications.
